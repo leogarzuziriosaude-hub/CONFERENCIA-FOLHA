@@ -36,13 +36,16 @@ def get_rubrica(tipo: str, prefixo) -> int:
 def padronizar_matricula(valor) -> str:
     """
     Normaliza matrícula para string de 8 dígitos sem formatação.
-    Aceita: '0.123.456-7' ou '01234567' ou variações.
-    Retorna: '01234567'
+    Aceita: '0.123.456-7' ou '01234567' ou '012345670' (9 dígitos com zero extra).
+    Retorna: '01234567' (sempre 8 dígitos)
     """
     if pd.isna(valor):
         return ""
     s = str(valor).strip()
     apenas_digitos = re.sub(r"[^\d]", "", s)
+    # Se vier com 9 dígitos, pega só os 8 primeiros
+    if len(apenas_digitos) == 9:
+        apenas_digitos = apenas_digitos[:8]
     return apenas_digitos.zfill(8) if apenas_digitos else ""
 
 
@@ -161,7 +164,7 @@ def padronizar_previa(df: pd.DataFrame) -> pd.DataFrame:
     ]
     df_pad["MATRICULA"] = df_pad["MATRICULA"].apply(padronizar_matricula)
     df_pad["RUBRICA"] = pd.to_numeric(df_pad["RUBRICA"], errors="coerce")
-    df_pad["COMPETENCIA"] = pd.to_datetime(df_pad["COMPETENCIA"], dayfirst=True, errors="coerce")
+    df_pad["COMPETENCIA"] = pd.to_datetime(df_pad["COMPETENCIA"], errors="coerce").dt.strftime("%m/%Y")
     df_pad = remover_linhas_vazias(df_pad)
     return df_pad.reset_index(drop=True)
 
