@@ -7,6 +7,7 @@ import streamlit as st
 import pandas as pd
 from pathlib import Path
 from io import BytesIO
+from src.dashboard import render_dashboard
 
 from src.leitura import ler_eventos_variaveis, ler_absenteismo, ler_dificil_provimento, ler_previa
 from src.padronizacao import (
@@ -34,7 +35,7 @@ st.caption("Validação de eventos variáveis, faltas, difícil provimento e gra
 # ── Sidebar: navegação ────────────────────────────────────────────────────────
 pagina = st.sidebar.radio(
     "Navegação",
-    ["📋 Conferência Mensal", "🏖️ Gestão de Férias"],
+    ["📋 Conferência Mensal", "🏖️ Gestão de Férias", "📊 DASHBOARD"],
 )
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -199,3 +200,9 @@ elif pagina == "🏖️ Gestão de Férias":
             st.rerun()
     else:
         st.info("Nenhum mês registrado ainda.")
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PÁGINA 2: GESTÃO DE FÉRIAS
+# ══════════════════════════════════════════════════════════════════════════════
+elif pagina == "📊 Dashboard":
+    render_dashboard()
