@@ -204,5 +204,5 @@ elif pagina == "🏖️ Gestão de Férias":
 # ══════════════════════════════════════════════════════════════════════════════
 # PÁGINA 2: GESTÃO DE FÉRIAS
 # ══════════════════════════════════════════════════════════════════════════════
-elif pagina == "📊 Dashboard":
+elif pagina == "📊 DASHBOARD":
     render_dashboard()
