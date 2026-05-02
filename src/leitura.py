@@ -47,4 +47,3 @@ def ler_previa(caminho_arquivo):
     """
     df = pd.read_excel(caminho_arquivo, header=0)
     return df
-# teste commit
